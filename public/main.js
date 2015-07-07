@@ -42,6 +42,14 @@ function getTodoList(callback) {
     createRequest.send();
 }
 
+function removeTodo(callback) {
+    var createRequest = new XMLHttpRequest();
+    createRequest.open("DELETE","/api/todo");
+    todoList.removeChild(todoList.firstChild);
+    reloadTodoList();
+}
+
+
 function reloadTodoList() {
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
