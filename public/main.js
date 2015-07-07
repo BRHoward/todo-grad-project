@@ -42,6 +42,21 @@ function getTodoList(callback) {
     createRequest.send();
 }
 
+function deleteTodo(callback, id)
+{
+    var createRequest = new XMLHttpRequest();
+    createRequest.open("DELETE", "/api/todo/" + id);
+    createRequest.onload = function(){
+        if(this.status === 200) {
+            callback();
+        } else{
+            error.textContent = "Failed to get list. Server returned " + this.status + " - " + this.responseText;
+        }
+    }
+    createRequest.send();
+}
+
+
 
 function reloadTodoList() {
     while (todoList.firstChild) {
@@ -52,7 +67,17 @@ function reloadTodoList() {
         todoListPlaceholder.style.display = "none";
         todos.forEach(function(todo) {
             var listItem = document.createElement("li");
+            var delButton = document.createElement("input")
+            delButton.type = "button";
+            delButton.value = "Delete";
+            delButton.className = "delBtn";
+
+            delButton.addEventListener('click', function() {
+                deleteTodo(reloadTodoList, todo.id)
+            });
+
             listItem.textContent = todo.title;
+            listItem.appendChild(delButton);
             todoList.appendChild(listItem);
         });
     });

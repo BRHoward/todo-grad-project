@@ -1,5 +1,6 @@
 var express = require("express");
 var bodyParser = require("body-parser");
+var _=require('underscore');
 
 module.exports = function(port, middleware) {
     var app = express();
@@ -43,9 +44,9 @@ module.exports = function(port, middleware) {
     });
 
     function getTodo(id) {
-        return todos.filter(function(todo) {
+        return _.find(todos,function(todo){
             return todo.id === id;
-        })[0];
+        });
     }
 
     return app.listen(port);
