@@ -70,5 +70,89 @@ testing.describe("end to end", function() {
             });
         });
     });
+    testing.describe("on delete todo item", function () {
+        testing.it("clears one todo item", function () {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.deleteFirstTodo(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 0);
+            });
+        });
+        testing.it("clears the second todo item", function () {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.addTodo(server, "Another todo item");
+            helpers.deleteSecondTodo(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 1);
+            });
+        });
+        testing.it("displays error if the request fails", function() {
+            helpers.setupErrorRoute(server, "delete", "/api/todo/0");
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.deleteFirstTodo(server);
+            helpers.getErrorText(server).then(function(text) {
+                assert.equal(text, "Failed to delete item. Server returned 500 - Internal Server Error");
+            });
+        });
+    });
+    testing.describe("on update todo item", function() {
+        testing.it("updates one item", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.updateTodo(server, 0);
+            helpers.getTodoList(server).then(function(elements) {
+                elements[0].getText().then(function(text) {
+                    assert.equal(text, "Updated Todo");
+                });
+            });
+        });
+        testing.it("updates second item", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.addTodo(server, "another todo item");
+            helpers.updateTodo(server, 1);
+            helpers.getTodoList(server).then(function(elements) {
+                elements[1].getText().then(function(text) {
+                    assert.equal(text, "Updated Todo");
+                });
+            });
+        });
+        testing.it("displays error if the request fails", function() {
+            helpers.setupErrorRoute(server, "put", "/api/todo/0");
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.updateTodo(server, 0);
+            helpers.getErrorText(server).then(function(text) {
+                assert.equal(text, "Failed to update item. Server returned 500 - Internal Server Error");
+            });
+        });
+    });
+    testing.describe("on hitting complete button", function() {
+        testing.it("changes the state of the item to complete", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.toggleFirstComplete(server);
+            helpers.getTodoList(server).then(function(elements) {
+                elements[0].getAttribute("class").then(function(classname) {
+                    assert.equal(classname, "itemComplete");
+                });
+            });
+        });
+        testing.it("changes state back to uncomplete", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.toggleFirstComplete(server);
+            helpers.toggleFirstComplete(server);
+            helpers.getTodoList(server).then(function(elements) {
+                elements[0].getAttribute("class").then(function(classname) {
+                    assert.equal(classname, "itemUncomplete");
+                });
+            });
+
+        });
+    });
 });
 

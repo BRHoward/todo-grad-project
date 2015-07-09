@@ -70,6 +70,7 @@ describe("server", function() {
                 request.get(todoListUrl, function(error, response, body) {
                     assert.deepEqual(JSON.parse(body), [{
                         title: "This is a TODO item",
+                        isComplete: false,
                         done: false,
                         id: "0"
                     }]);
@@ -113,6 +114,14 @@ describe("server", function() {
                         done();
                     });
                 });
+            });
+        });
+    });
+    describe("update a todo", function() {
+        it("responds with status code 404 if there is no such item", function(done) {
+            request.put(todoListUrl + "/0", function(error, response) {
+                assert.equal(response.statusCode, 404);
+                done();
             });
         });
     });

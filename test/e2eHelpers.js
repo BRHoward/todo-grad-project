@@ -70,6 +70,44 @@ module.exports.addTodo = function(server, text) {
     server.driver.findElement(webdriver.By.id("submit-todo")).click();
 };
 
+module.exports.deleteFirstTodo = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElements(webdriver.By.css(".delBtn")).then(function(deleteButtons) {
+        deleteButtons[0].click();
+    });
+};
+
+module.exports.deleteSecondTodo = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElements(webdriver.By.css(".delBtn")).then(function(deleteButtons) {
+        deleteButtons[1].click();
+    });
+};
+
+module.exports.updateTodo = function(server, id) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElements(webdriver.By.css(".updBtn")).then(function(updateButtons) {
+        updateButtons[id].click();
+    });
+    server.driver.findElements(webdriver.By.css(".updField")).then(function(updateFields) {
+        updateFields[0].sendKeys("Updated Todo");
+    });
+    server.driver.findElements(webdriver.By.css(".sbmtBtn")).then(function(sbmtButtons) {
+        sbmtButtons[0].click();
+    });
+};
+
+module.exports.toggleFirstComplete = function (server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElements(webdriver.By.css(".compBtn")).then(function(compButtons) {
+        compButtons[0].click();
+    });
+};
+
 module.exports.setupErrorRoute = function(server, action, route) {
     if (action === "get") {
         server.router.get(route, function(req, res) {
@@ -78,6 +116,16 @@ module.exports.setupErrorRoute = function(server, action, route) {
     }
     if (action === "post") {
         server.router.post(route, function(req, res) {
+            res.sendStatus(500);
+        });
+    }
+    if (action === "delete") {
+        server.router.delete(route, function(req, res) {
+            res.sendStatus(500);
+        });
+    }
+    if (action === "put") {
+        server.router.put(route, function(req, res) {
             res.sendStatus(500);
         });
     }
