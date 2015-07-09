@@ -166,9 +166,10 @@ testing.describe("end to end", function() {
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "another todo item");
             helpers.toggleFirstComplete(server);
+            helpers.toggleSecondComplete(server);
             helpers.deleteCompletedTodos(server);
             helpers.getTodoList(server).then(function(elements) {
-                assert.equal(elements.length, 1);
+                assert.equal(elements.length, 0);
             });
         });
     });

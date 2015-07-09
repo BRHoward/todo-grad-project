@@ -114,6 +114,14 @@ module.exports.toggleFirstComplete = function (server) {
     });
 };
 
+module.exports.toggleSecondComplete = function (server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElements(webdriver.By.css(".compBtn")).then(function(compButtons) {
+        compButtons[1].click();
+    });
+};
+
 module.exports.setupErrorRoute = function(server, action, route) {
     if (action === "get") {
         server.router.get(route, function(req, res) {
