@@ -96,7 +96,7 @@ function deleteCompleteTodos(b) {
 }
 
 function reloadTodoList() {
-    deleteComplete.className = "invisButton";
+    deleteComplete.className = "invisButton button";
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
     }
@@ -109,7 +109,7 @@ function reloadTodoList() {
             }
         });
         if (completeTasks > 0) {
-            deleteComplete.className = "delCompleted";
+            deleteComplete.className = "delCompleted button";
 
         }
         completeCounter.textContent = "" + completeTasks + " / " + todos.length + " tasks complete";
@@ -124,14 +124,14 @@ function reloadTodoList() {
             var delButton = document.createElement("input");
             delButton.type = "button";
             delButton.value = "Delete";
-            delButton.className = "delBtn";
+            delButton.className = "delBtn button";
             delButton.addEventListener("click", function() {
                 deleteTodo(reloadTodoList, todo.id);
             });
             var updateButton = document.createElement("input");
             updateButton.type = "button";
             updateButton.value = "Update";
-            updateButton.className = "updBtn";
+            updateButton.className = "updBtn button";
             updateButton.addEventListener("click", function() {
                 updateButton.parentNode.removeChild(updateButton);
                 var updateField = document.createElement("input");
@@ -141,7 +141,7 @@ function reloadTodoList() {
                 var submitButton = document.createElement("input");
                 submitButton.type = "button";
                 submitButton.value = "Submit";
-                submitButton.className = "sbmtBtn";
+                submitButton.className = "sbmtBtn button";
                 listItem.appendChild(updateField);
                 listItem.appendChild(submitButton);
                 submitButton.addEventListener("click", function() {
@@ -151,7 +151,7 @@ function reloadTodoList() {
             var compButton = document.createElement("input");
             compButton.type = "button";
             compButton.value = "Completed";
-            compButton.className = "compBtn";
+            compButton.className = "compBtn button";
             compButton.addEventListener("click", function() {
                 if (todo.isComplete) {
                     updateTodo(todo.title, false, todo.id, reloadTodoList);

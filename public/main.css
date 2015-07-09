@@ -77,3 +77,8 @@ h1 {
 .invisButton {
     display : none;
 }
+
+.button {
+    border-radius: 10px;
+    box-shadow: 3px 3px 1px 1px #CCC
+}
