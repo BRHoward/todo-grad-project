@@ -48,10 +48,12 @@ h1 {
     font-family: sans-serif;
 }
 
-.delCompBtn {
+.delCompleted {
     background-color: teal;
     font-size: 15px;
     font-family: sans-serif;
+    color : #FFFFFF;
+    display: block;
 }
 
 .itemComplete {
@@ -70,4 +72,8 @@ h1 {
     margin-left: auto;
     margin-right :auto;
     padding-left: 10em;
+}
+
+.invisButton {
+    display : none;
 }

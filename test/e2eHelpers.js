@@ -86,6 +86,12 @@ module.exports.deleteSecondTodo = function(server) {
     });
 };
 
+module.exports.deleteCompletedTodos = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElement(webdriver.By.css(".delCompleted")).click();
+};
+
 module.exports.updateTodo = function(server, id) {
     var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
     server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);

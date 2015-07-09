@@ -151,7 +151,25 @@ testing.describe("end to end", function() {
                     assert.equal(classname, "itemUncomplete");
                 });
             });
-
+        });
+        testing.it("deletes all complete todos from one", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.toggleFirstComplete(server);
+            helpers.deleteCompletedTodos(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 0);
+            });
+        });
+        testing.it("deletes one complete todos from two", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.addTodo(server, "another todo item");
+            helpers.toggleFirstComplete(server);
+            helpers.deleteCompletedTodos(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 1);
+            });
         });
     });
 });
