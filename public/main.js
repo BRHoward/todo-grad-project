@@ -96,7 +96,7 @@ function deleteCompleteTodos(b) {
 }
 
 function reloadTodoList() {
-    deleteComplete.className = "invisButton button";
+    deleteComplete.className = "invis button";
     while (todoList.firstChild) {
         todoList.removeChild(todoList.firstChild);
     }
