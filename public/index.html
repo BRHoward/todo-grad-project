@@ -12,11 +12,41 @@
         <header>
             <h1>TODO List</h1>
         </header>
-        <section ng-controller="todoController as todoCtrl">
-            <ul>
-                <li ng-repeat="todo in todoCtrl.todoList">{{ todo }}</li>
+        <section ng-controller="todoController">
+            <div>
+                <p>Filter</p>
+                <button class="button" ng-click="markAll()">All</button>
+                <button class="button" ng-click="markActive()">Active</button>
+                <button class="button" ng-click="markComplete()">Complete</button>
+            </div>
+
+            <ul id="todo-list">
+                <li ng-repeat="todo in todoList" ng-show="todo.visible">
+                    <div ng-show="!beingEdited">
+                    <p ng-class="{itemComplete:todo.isComplete}">{{ todo.text }}</p>
+                    <button class="button delBtn" ng-click="deleteTodo(todo.id)">Delete</button>
+                    <button class="button updBtn" ng-click="beingEdited = true">Update</button>
+                    <button class="button compBtn" ng-click="todo.isComplete=true; updateTodo(todo)">Complete</button>
+                </div>
+                    <form ng-submit="updateTodo(todo); beingEdited = false" ng-show="beingEdited">
+                        <input type="text" class="updField" ng-model="todo.text">
+                        <input type="submit" class="updSbmtBtn" value="Submit">
+                    </form>
+                </li>
             </ul>
+
+            <form ng-submit="addTodo()">
+                <input type="text" id="input-field" ng-model="newTodo" autofocus>
+                <input type="submit" id="submit-button" value="Add Todo">
+            </form>
+            <div>
+                <p>{{ completeItems }} / {{ todoList.length }} items complete.</p>
+                <button class="button delCompleted" ng-show="completeItems" ng-click="deleteCompleted()">Delete Completed Items</button>
+            </div>
+            <div id="error">
+                {{errorText}}
+            </div>
         </section>
 
     </body>
-</html>
+</html>`

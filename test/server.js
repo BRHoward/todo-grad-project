@@ -63,15 +63,17 @@ describe("server", function() {
             request.post({
                 url: todoListUrl,
                 json: {
-                    title: "This is a TODO item",
-                    done: false
+                    newText: "This is a TODO item",
+                    isComplete: false,
+                    visible: true,
+                    id: "0"
                 }
             }, function() {
                 request.get(todoListUrl, function(error, response, body) {
                     assert.deepEqual(JSON.parse(body), [{
-                        title: "This is a TODO item",
+                        text: "This is a TODO item",
                         isComplete: false,
-                        done: false,
+                        visible: true,
                         id: "0"
                     }]);
                     done();

@@ -4,6 +4,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks("grunt-mocha-test");
     grunt.loadNpmTasks("grunt-mocha-istanbul");
     grunt.loadNpmTasks("grunt-coveralls");
+    grunt.loadNpmTasks("grunt-express-server");
+    grunt.loadNpmTasks("grunt-contrib-watch");
 
     var testOutputLocation = process.env.CIRCLE_TEST_REPORTS || "test_output";
     var artifactsLocation = "build_artifacts";
@@ -72,10 +74,31 @@ module.exports = function(grunt) {
             ci: {
                 src: artifactsLocation + "/lcov.info"
             }
+        },
+        express: {
+            options: {
+                // Override defaults here
+            },
+            dev: {
+                options: {
+                    script: "server.js"
+                }
+            }
+        },
+        watch: {
+            express: {
+                files: ["**/*.js"],
+                tasks: ["express:dev"],
+                options: {
+                    spawn: false
+                    // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions.
+                    //Without this option specified express won't be reloaded
+                }
+            }
         }
     });
 
-    grunt.registerMultiTask("istanbul_report", "Solo task for generating a report over multiple files.", function () {
+    grunt.registerMultiTask("istanbul_report", "Solo task for generating a report over multiple files.", function() {
         var done = this.async();
         var cmd = process.execPath;
         var istanbulPath = require.resolve("istanbul/lib/cli");
@@ -95,8 +118,12 @@ module.exports = function(grunt) {
 
     grunt.registerTask("check", ["jshint", "jscs"]);
     grunt.registerTask("test", ["check", "mochaTest:test", "mocha_istanbul:test", "istanbul_report",
-        "istanbul_check_coverage"]);
+        "istanbul_check_coverage"
+    ]);
     grunt.registerTask("ci-test", ["check", "mochaTest:ci", "mocha_istanbul:ci", "istanbul_report",
-        "istanbul_check_coverage", "coveralls"]);
+        "istanbul_check_coverage", "coveralls"
+    ]);
     grunt.registerTask("default", "test");
+    grunt.registerTask("dev", ["express", "watch"]);
+
 };

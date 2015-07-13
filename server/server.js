@@ -16,9 +16,13 @@ module.exports = function(port, middleware) {
 
     // Create
     app.post("/api/todo", function(req, res) {
-        var todo = req.body;
-        todo.id = latestId.toString();
-        todo.isComplete = false;
+        var todo = {
+            id: latestId.toString(),
+            text: req.body.newText,
+            isComplete: false,
+            visible: true
+        };
+
         latestId++;
         todos.push(todo);
         res.set("Location", "/api/todo/" + todo.id);
@@ -48,10 +52,18 @@ module.exports = function(port, middleware) {
     app.put("/api/todo/:id", function(req, res) {
         var id = req.params.id;
         var todo = getTodo(id);
-        var newTodo = req.body;
+        // todo = req.body;
+
+        for (var i = 0; i < todos.length; i++) {
+            if (todos[i].id === req.body.id) {
+                todos[i] = req.body;
+            }
+        }
+
+        // console.log(todo);
+        // console.log(todos);
 
         if (todo) {
-            updateTodo(id, newTodo);
             res.sendStatus(200);
         } else {
             res.sendStatus(404);
@@ -64,17 +76,5 @@ module.exports = function(port, middleware) {
         });
     }
 
-    function updateTodo(id, newTodo) {
-        var todoIndex = -1;
-
-        for (var i = 0; i < todos.length; i++) {
-            if (todos[i].id === id) {
-                todoIndex = i;
-                break;
-            }
-        }
-        newTodo.id = id;
-        todos[todoIndex] = newTodo;
-    }
     return app.listen(port);
 };

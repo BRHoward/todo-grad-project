@@ -79,6 +79,8 @@ h1 {
 }
 
 .button {
+    background-color: #3399FF;
     border-radius: 10px;
+    color : #FFFFFF;
     box-shadow: 3px 3px 1px 1px #CCC
 }
