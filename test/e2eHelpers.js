@@ -60,31 +60,43 @@ module.exports.getErrorText = function(server) {
 };
 
 module.exports.getTodoList = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     return server.driver.findElements(webdriver.By.css("#todo-list li p"));
 };
 
 module.exports.addTodo = function(server, text) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElement(webdriver.By.id("input-field")).sendKeys(text);
     server.driver.findElement(webdriver.By.id("submit-button")).click();
 };
 
 module.exports.deleteFirstTodo = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElements(webdriver.By.css(".delBtn")).then(function(deleteButtons) {
         deleteButtons[0].click();
     });
 };
 
 module.exports.deleteSecondTodo = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElements(webdriver.By.css(".delBtn")).then(function(deleteButtons) {
         deleteButtons[1].click();
     });
 };
 
 module.exports.deleteCompletedTodos = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElement(webdriver.By.css(".delCompleted")).click();
 };
 
 module.exports.updateTodo = function(server, id) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElements(webdriver.By.css(".updBtn")).then(function(updateButtons) {
         updateButtons[id].click();
     });
@@ -97,12 +109,16 @@ module.exports.updateTodo = function(server, id) {
 };
 
 module.exports.toggleFirstComplete = function (server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElements(webdriver.By.css(".compBtn")).then(function(compButtons) {
         compButtons[0].click();
     });
 };
 
 module.exports.toggleSecondComplete = function (server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
     server.driver.findElements(webdriver.By.css(".compBtn")).then(function(compButtons) {
         compButtons[1].click();
     });

@@ -12,7 +12,8 @@
         <header>
             <h1>TODO List</h1>
         </header>
-        <section ng-controller="todoController">
+        <section ng-controller="todoController" >
+            <h2 id="todo-list-placeholder" ng-hide="loadedList"> Loading ... </h2>
             <div>
                 <p>Filter</p>
                 <button class="button" ng-click="markAll()">All</button>

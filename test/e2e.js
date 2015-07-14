@@ -65,7 +65,6 @@ testing.describe("end to end", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "Another new todo item");
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 assert.equal(elements.length, 2);
             });
@@ -75,10 +74,8 @@ testing.describe("end to end", function() {
         testing.it("clears one todo item", function () {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
-            this.timeout(2000);
             helpers.addTodo(server, "Another todo item");
             helpers.deleteFirstTodo(server);
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 assert.equal(elements.length, 1);
             });
@@ -88,7 +85,6 @@ testing.describe("end to end", function() {
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "Another todo item");
             helpers.deleteSecondTodo(server);
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 assert.equal(elements.length, 1);
             });
@@ -96,11 +92,8 @@ testing.describe("end to end", function() {
         testing.it("displays error if the request fails", function() {
             helpers.setupErrorRoute(server, "delete", "/api/todo/0");
             helpers.navigateToSite(server);
-            this.timeout(2000);
             helpers.addTodo(server, "New todo item");
-            this.timeout(2000);
             helpers.deleteFirstTodo(server);
-            this.timeout(2000);
             helpers.getErrorText(server).then(function(text) {
                 assert.equal(text, "Failed to delete item. Server returned 500 - Internal Server Error");
             });
@@ -110,9 +103,7 @@ testing.describe("end to end", function() {
         testing.it("updates one item", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
-            this.timeout(2000);
             helpers.updateTodo(server, 0);
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 elements[0].getText().then(function(text) {
                     assert.equal(text, "New todo itemUPDATE");
@@ -122,10 +113,8 @@ testing.describe("end to end", function() {
         // testing.it("updates second item", function() {
         //     helpers.navigateToSite(server);
         //     helpers.addTodo(server, "New todo item");
-        //     this.timeout(1000);
         //     helpers.addTodo(server, "another todo item");
         //     helpers.updateTodo(server, 1);
-        //     this.timeout(1000);
         //     helpers.getTodoList(server).then(function(elements) {
         //         elements[1].getText().then(function(text) {
         //             assert.equal(text, "New todo itemUPDATE");
@@ -136,9 +125,7 @@ testing.describe("end to end", function() {
             helpers.setupErrorRoute(server, "put", "/api/todo/0");
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
-            this.timeout(2000);
             helpers.updateTodo(server, 0);
-            this.timeout(2000);
             helpers.getErrorText(server).then(function(text) {
                 assert.equal(text, "Failed to update item. Server returned 500 - Internal Server Error");
             });
@@ -148,9 +135,7 @@ testing.describe("end to end", function() {
         testing.it("changes the state of the item to complete", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
-            this.timeout(2000);
             helpers.toggleFirstComplete(server);
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 elements[0].getAttribute("class").then(function(classname) {
                     assert.equal(classname, "ng-binding itemComplete");
@@ -160,10 +145,8 @@ testing.describe("end to end", function() {
         testing.it("deletes all complete todos from one", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
-            this.timeout(2000);
             helpers.toggleFirstComplete(server);
             helpers.deleteCompletedTodos(server);
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 assert.equal(elements.length, 0);
             });
@@ -172,12 +155,9 @@ testing.describe("end to end", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "another todo item");
-            this.timeout(2000);
             helpers.toggleFirstComplete(server);
             helpers.toggleSecondComplete(server);
-            this.timeout(2000);
             helpers.deleteCompletedTodos(server);
-            this.timeout(2000);
             helpers.getTodoList(server).then(function(elements) {
                 assert.equal(elements.length, 0);
             });

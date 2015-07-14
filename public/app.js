@@ -10,10 +10,14 @@
         $scope.newTodo = "";
         $scope.completeItems = 0;
 
+        $scope.loadedList = false;
+
         $scope.getTodos = function() {
+            $scope.loadedList = false;
             $http.get("/api/todo").success(function(data) {
                 $scope.todoList = data;
                 $scope.updateCompleteItems();
+                $scope.loadedList = true;
             }).error(function(data, status) {
                 $scope.errorText = "Failed to get list. Server returned " + status + " - " + data;
             });
