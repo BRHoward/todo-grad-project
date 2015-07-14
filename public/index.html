@@ -16,9 +16,9 @@
             <h2 id="todo-list-placeholder" ng-hide="loadedList"> Loading ... </h2>
             <div>
                 <p>Filter</p>
-                <button class="button" ng-click="markAll()">All</button>
-                <button class="button" ng-click="markActive()">Active</button>
-                <button class="button" ng-click="markComplete()">Complete</button>
+                <button class="button markAllBtn" id="markAllBtn" ng-click="markAll()">All</button>
+                <button class="button markActiveBtn" id="markActiveBtn" ng-click="markActive()">Active</button>
+                <button class="button markCompleteBtn" id="markCompleteBtn" ng-click="markComplete()">Complete</button>
             </div>
 
             <ul id="todo-list">

@@ -124,6 +124,22 @@ module.exports.toggleSecondComplete = function (server) {
     });
 };
 
+module.exports.markAll = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElement(webdriver.By.id("markAllBtn")).click();
+};
+module.exports.markActive = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElement(webdriver.By.id("markActiveBtn")).click();
+};
+module.exports.markComplete = function(server) {
+    var todoListPlaceholder = server.driver.findElement(webdriver.By.id("todo-list-placeholder"));
+    server.driver.wait(webdriver.until.elementIsNotVisible(todoListPlaceholder), 5000);
+    server.driver.findElement(webdriver.By.id("markCompleteBtn")).click();
+};
+
 module.exports.setupErrorRoute = function(server, action, route) {
     if (action === "get") {
         server.router.get(route, function(req, res) {

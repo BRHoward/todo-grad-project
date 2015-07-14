@@ -70,8 +70,8 @@ testing.describe("end to end", function() {
             });
         });
     });
-    testing.describe("on delete todo item", function () {
-        testing.it("clears one todo item", function () {
+    testing.describe("on delete todo item", function() {
+        testing.it("clears one todo item", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "Another todo item");
@@ -80,7 +80,7 @@ testing.describe("end to end", function() {
                 assert.equal(elements.length, 1);
             });
         });
-        testing.it("clears the second todo item", function () {
+        testing.it("clears the second todo item", function() {
             helpers.navigateToSite(server);
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "Another todo item");
@@ -156,12 +156,40 @@ testing.describe("end to end", function() {
             helpers.addTodo(server, "New todo item");
             helpers.addTodo(server, "another todo item");
             helpers.toggleFirstComplete(server);
-            helpers.toggleSecondComplete(server);
             helpers.deleteCompletedTodos(server);
             helpers.getTodoList(server).then(function(elements) {
-                assert.equal(elements.length, 0);
+                assert.equal(elements.length, 1);
+            });
+        });
+    });
+    testing.describe("on hitting filter buttons", function() {
+        testing.it("mark all shows all", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.markAll(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 1);
+            });
+        });
+        testing.it("mark active hides complete", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.addTodo(server, "Another todo");
+            helpers.toggleFirstComplete(server);
+            helpers.markActive(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 2);
+            });
+        });
+        testing.it("mark complete hides active", function() {
+            helpers.navigateToSite(server);
+            helpers.addTodo(server, "New todo item");
+            helpers.addTodo(server, "Another todo");
+            helpers.toggleSecondComplete(server);
+            helpers.markComplete(server);
+            helpers.getTodoList(server).then(function(elements) {
+                assert.equal(elements.length, 2);
             });
         });
     });
 });
-
